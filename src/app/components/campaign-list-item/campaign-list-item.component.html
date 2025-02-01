@@ -1,0 +1,7 @@
+<p-card header="{{campaign().name}}" >
+  <div>
+    @for(keyword of campaign().keywords; track keyword){
+      <p-tag value="{{keyword}}"/>
+    }
+  </div>
+</p-card>

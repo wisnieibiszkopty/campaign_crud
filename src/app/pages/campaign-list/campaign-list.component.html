@@ -1,0 +1,5 @@
+<div>
+  @for(campaign of campaigns(); track campaign.id){
+    <app-campaign-list-item routerLink="/details/{{campaign.id}}" [campaign]="campaign"/>
+  }
+</div>

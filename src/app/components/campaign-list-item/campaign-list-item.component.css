@@ -1,0 +1,14 @@
+p-card{
+  margin: 10px;
+
+}
+
+p-card:hover{
+  cursor: pointer;
+}
+
+p-tag{
+  margin-left: 4px;
+  margin-right: 4px;
+}
+

@@ -1,0 +1,74 @@
+<div class="form-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h1>{{editing() ? 'Edit your campaign' : 'Create new campaign'}}</h1>
+
+    <!-- Name -->
+    <p-floatlabel variant="on" class="item">
+      <input pInputText id="name" formControlName="name" autocomplete="off" />
+      <label for="name">Campaign name</label>
+    </p-floatlabel>
+    <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+      <small class="error" *ngIf="form.get('name')?.hasError('required')">Name is required</small>
+      <small class="error" *ngIf="form.get('name')?.hasError('minlength')">Name must be at least 5 characters long</small>
+    </div>
+
+    <!-- Keywords -->
+    <div formArrayName="keywords" style="margin-bottom: 15px">
+      <h2>Keywords</h2>
+      <p-button label="Add new keyword" icon="pi pi-plus" (click)="addKeyword()"/>
+      @for(keyword of keywords.controls; track keyword; let i = $index){
+        <div class="keyword item">
+          <p-autocomplete [formControlName]="i" [suggestions]="suggestions" (completeMethod)="search($event)" />
+          <p-button icon="pi pi-trash" severity="secondary" aria-label="Remove" (click)="removeKeyword(i)"/>
+        </div>
+      }
+    </div>
+
+    <!-- Bid amount && fund -->
+    <p-floatlabel variant="on" class="item">
+      <input formControlName="bidAmount" pInputText id="bidAmount"/>
+      <label for="bidAmount">Bid amount</label>
+    </p-floatlabel>
+    <div *ngIf="form.get('bidAmount')?.invalid && form.get('bidAmount')?.touched">
+      <small class="error" *ngIf="form.get('bidAmount')?.hasError('required')">Bid amount is required</small>
+      <small class="error" *ngIf="form.get('bidAmount')?.hasError('min')">Bid amount must be at least 100</small>
+      <small class="error" *ngIf="form.get('bidAmount')?.hasError('pattern')">Bid amount must be a valid number</small>
+    </div>
+
+    <p-floatlabel variant="on" class="item">
+      <input formControlName="fund" id="fund" pInputText />
+      <label for="fund">Types fund</label>
+    </p-floatlabel>
+    <small>Available:{{account()?.funds}}</small>
+    <div *ngIf="form.get('fund')?.invalid && form.get('fund')?.touched">
+      <small class="error" *ngIf="form.get('fund')?.hasError('required')">Fund is required</small>
+      <small class="error" *ngIf="form.get('fund')?.hasError('min')">Bid amount must be at least 100</small>
+      <small class="error" *ngIf="form.get('fund')?.hasError('pattern')">Fund must be a valid number</small>
+    </div>
+
+    <!-- Status -->
+    <div class="row">
+      <p>Active</p>
+      <p-toggleswitch formControlName="status" />
+    </div>
+
+    <div class="item">
+      <p-select [options]="cities" formControlName="town" optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
+    </div>
+    <div *ngIf="form.get('town')?.invalid && form.get('town')?.touched">
+      <small class="error" *ngIf="form.get('town')?.hasError('required')">City is required</small>
+    </div>
+
+    <p-floatlabel variant="on" class="item">
+      <input formControlName="radius" id="radius" pInputText/>
+      <label for="radius">Radius</label>
+    </p-floatlabel>
+    <div *ngIf="form.get('radius')?.invalid && form.get('radius')?.touched">
+      <small class="error" *ngIf="form.get('radius')?.hasError('required')">Radius is required</small>
+      <small class="error" *ngIf="form.get('radius')?.hasError('min')">Radius must be at least 10</small>
+      <small class="error" *ngIf="form.get('radius')?.hasError('pattern')">Radius must be a valid number</small>
+    </div>
+
+    <p-button label="{{editing() ? 'Edit' : 'Save'}}" icon="pi pi-check" iconPos="right" [disabled]="form.invalid" (click)="onSubmit()"/>
+  </form>
+</div>

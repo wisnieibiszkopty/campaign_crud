@@ -1,0 +1,16 @@
+div{
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 1000px) {
+  div{
+    width: 90vw;
+  }
+}
+
+
+

@@ -1,0 +1,5 @@
+<p-menubar [model]="items"></p-menubar>
+<p-dialog header="Emerald account" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+  <p>Available funds: {{account()?.funds}}</p>
+</p-dialog>
+

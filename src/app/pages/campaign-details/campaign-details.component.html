@@ -1,0 +1,22 @@
+@if(campaign() !== null){
+  <div class="container">
+    <div class="row">
+      <h1>{{ campaign()?.name }}</h1>
+      <div class="buttons">
+        <p-button (click)="edit()" label="Edit" severity="info"/>
+        <p-button (click)="confirmDelete($event)" label="Delete" severity="danger"/>
+      </div>
+    </div>
+    <div style=" display: flex; gap: 10px">
+      @for(keyword of campaign()?.keywords; track keyword){
+        <p-tag value="{{keyword}}"/>
+      }
+    </div>
+    <p>Bid amount: {{campaign()?.bidAmount}}</p>
+    <p>Types fund: {{campaign()?.fund}}</p>
+    <p>Status: {{campaign()?.status ? 'on' : 'off'}}</p>
+    <p>Town: {{campaign()?.town}}</p>
+    <p>Radius: {{campaign()?.radius}}</p>
+  </div>
+}
+<p-confirmDialog/>
