@@ -13,7 +13,6 @@ import {Campaign} from '../../types';
 @Component({
   selector: 'app-campaign-details',
   imports: [
-    RouterLink,
     Tag,
     Button,
     ConfirmDialog,
@@ -22,7 +21,7 @@ import {Campaign} from '../../types';
   standalone: true,
   styleUrl: './campaign-details.component.css'
 })
-export class CampaignDetailsComponent implements OnInit{
+export class CampaignDetailsComponent{
 
   campaign: Signal<Campaign | null>;
 
@@ -47,10 +46,6 @@ export class CampaignDetailsComponent implements OnInit{
       ),
       {initialValue: null}
     );
-  }
-
-  ngOnInit(): void {
-
   }
 
   edit() {
@@ -89,7 +84,7 @@ export class CampaignDetailsComponent implements OnInit{
       this.campaignService.delete(id);
       this.router.navigate(['/']);
     } catch (err){
-      console.error(err);
+      this.messageService.add({ severity: 'warn', summary: 'Delete', detail: err });
     }
   }
 

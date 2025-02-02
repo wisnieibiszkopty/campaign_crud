@@ -7,7 +7,7 @@
 
 form {
   width: 50vw;
-  background: white;
+  background: var(--p-content-background);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -22,16 +22,20 @@ form {
 .row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .keyword{
   display: flex;
-  gap: 10px;
+  gap: 20px;
+}
+
+.error{
+  color: var(--p-red-500);
 }
 
 .item, input, p-select, p-autoComplete, .p-autocomplete{
   width: 100%;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }

@@ -1,10 +1,10 @@
 @if(campaign() !== null){
   <div class="container">
-    <div class="row">
+    <div class="flex">
       <h1>{{ campaign()?.name }}</h1>
       <div class="buttons">
-        <p-button (click)="edit()" label="Edit" severity="info"/>
-        <p-button (click)="confirmDelete($event)" label="Delete" severity="danger"/>
+        <p-button (click)="edit()" label="Edit" severity="primary" icon="pi pi-pencil" iconPos="right"/>
+        <p-button (click)="confirmDelete($event)" label="Delete" severity="danger" icon="pi pi-trash" iconPos="right"/>
       </div>
     </div>
     <div style=" display: flex; gap: 10px">

@@ -2,10 +2,7 @@ import {Component, Signal, ViewChild} from '@angular/core';
 import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
 import {Menubar} from 'primeng/menubar';
 import {Router} from '@angular/router';
-import {Popover} from 'primeng/popover';
 import {Dialog} from 'primeng/dialog';
-import {Button} from 'primeng/button';
-import {InputText} from 'primeng/inputtext';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {EmeraldService} from '../../services/emerald.service';
 import {Account} from '../../types';
@@ -14,10 +11,7 @@ import {Account} from '../../types';
   selector: 'app-navbar',
   imports: [
     Menubar,
-    Popover,
-    Dialog,
-    Button,
-    InputText
+    Dialog
   ],
   templateUrl: './navbar.component.html',
   standalone: true,

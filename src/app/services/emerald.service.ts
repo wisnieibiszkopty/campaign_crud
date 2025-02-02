@@ -12,8 +12,11 @@ export class EmeraldService {
   });
   account$ = this.accountSubject.asObservable();
 
-  constructor() {
+  constructor() {}
 
+  validateFunds(amount: number): boolean{
+    const funds = this.accountSubject.value?.funds!;
+    return funds - amount > 0;
   }
 
   takeFunds(amount: number){
@@ -25,7 +28,6 @@ export class EmeraldService {
 
     const funds = this.accountSubject.value?.funds!;
     const newFunds = funds - amount;
-    console.log(`${funds} ${amount} ${newFunds}`)
 
     if(amount < 0){
       throw new Error("Cannot take that amount");

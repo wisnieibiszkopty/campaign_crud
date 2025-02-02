@@ -23,7 +23,6 @@ export class CampaignListComponent {
 
   constructor(private campaignService: CampaignService) {
     this.campaigns = toSignal(this.campaignService.campaigns$);
-    console.log(this.campaigns());
   }
 
 }

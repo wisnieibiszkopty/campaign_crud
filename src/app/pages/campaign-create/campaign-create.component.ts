@@ -13,8 +13,6 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 import {FloatLabel} from 'primeng/floatlabel';
 import {InputText} from 'primeng/inputtext';
-import {InputNumber} from 'primeng/inputnumber';
-import {Fluid} from 'primeng/fluid';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {Select} from 'primeng/select';
 import {Button} from 'primeng/button';
@@ -36,8 +34,6 @@ export interface City {
     ReactiveFormsModule,
     FloatLabel,
     InputText,
-    InputNumber,
-    Fluid,
     ToggleSwitch,
     Select,
     Button,
@@ -60,17 +56,7 @@ export class CampaignCreateComponent {
 
   suggestions: any[] = [];
 
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    keywords: new FormArray([
-      new FormControl('', [Validators.required, this.valueFromListValidator(this.keywordsList)])
-    ]),
-    bidAmount: new FormControl(100, [Validators.required, Validators.min(100), Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]),
-    fund: new FormControl(100, [Validators.required, Validators.min(100), Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')]),
-    status: new FormControl(false, Validators.required),
-    town: new FormControl('', Validators.required),
-    radius: new FormControl(10, [Validators.required, Validators.min(10), Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')])
-  });
+  form: FormGroup;
 
   constructor(private fb: FormBuilder,
               private campaignService: CampaignService,
@@ -78,13 +64,44 @@ export class CampaignCreateComponent {
               private route: ActivatedRoute,
               private emeraldService: EmeraldService,
               private messageService: MessageService) {
+
     this.account = toSignal(this.emeraldService.account$);
+
+    this.form = new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5)
+      ]),
+      keywords: new FormArray([
+        new FormControl('', [
+          Validators.required,
+          this.valueFromListValidator(this.keywordsList)
+        ])
+      ]),
+      bidAmount: new FormControl(100, [
+        Validators.required,
+        Validators.min(100),
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
+      ]),
+      fund: new FormControl(100, [
+        Validators.required,
+        Validators.min(100),
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        this.fundValidator()
+      ]),
+      status: new FormControl(false, Validators.required),
+      town: new FormControl('', Validators.required),
+      radius: new FormControl(10, [
+        Validators.required,
+        Validators.min(10),
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$')
+      ])
+    });
+
 
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.campaign = navigation.extras.state['campaign'] ?? null;
-      console.log(this.campaign);
-
       if(this.campaign){
         this.populateForm(this.campaign);
         this.editing.set(true);
@@ -136,7 +153,7 @@ export class CampaignCreateComponent {
     let campaign: Campaign = {
       bidAmount: formValue.bidAmount ?? 0,
       fund: formValue.fund ?? 0,
-      keywords: formValue.keywords ? formValue.keywords.map(k => k ?? '') : [],
+      keywords: formValue.keywords ? formValue.keywords.map((k: string) => k ?? '') : [],
       name: formValue.name ?? '',
       radius: formValue.radius ?? 0,
       status: formValue.status ?? false,
@@ -162,4 +179,19 @@ export class CampaignCreateComponent {
       return allowedValues.includes(control.value) ? null : { invalidValue: true };
     };
   }
+
+  private fundValidator(): ValidatorFn {
+    return (control: AbstractControl) => {
+      if (!control.value) {
+        return null;
+      }
+
+      const hasEnoughFunds = this.emeraldService.validateFunds(control.value);
+      return hasEnoughFunds
+        ? null
+        : { invalidValue: { value: control.value, message: 'You do not have sufficient funds' } };
+    };
+  }
+
+
 }

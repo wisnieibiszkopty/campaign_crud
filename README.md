@@ -10,6 +10,3 @@ I want to be able to create, edit or delete a separate campaign for each of my p
 - Status (on or off - mandatory)
 - Town (can pick from pre-populated dropdown list of towns)
 - Radius (mandatory in kilometres)
-
-TODO
-responsywnosc
