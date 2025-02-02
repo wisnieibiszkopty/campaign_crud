@@ -83,8 +83,8 @@ export class CampaignDetailsComponent{
     try{
       this.campaignService.delete(id);
       this.router.navigate(['/']);
-    } catch (err){
-      this.messageService.add({ severity: 'warn', summary: 'Delete', detail: err });
+    } catch (err: any){
+      this.messageService.add({ severity: 'warn', summary: 'Delete', detail: err.message });
     }
   }
 
