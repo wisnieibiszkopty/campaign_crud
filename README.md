@@ -1,5 +1,7 @@
 # CampaignCrud
 
+A simple CRUD application for managing campaigns for sellers. It was built using Angular 19 and PrimeNG. It implements the following user story:
+
 ## User story
 
 I want to be able to create, edit or delete a separate campaign for each of my products I want to sell; Sellers to enter the following information for each campaign:
